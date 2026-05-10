@@ -1,403 +1,511 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DinnersDunn — Live AI Chef Demo</title>
-  <meta name="description" content="Try DinnersDunn live. Add what's in your fridge, set your diet and allergies, and chat with a real AI chef. 5 free questions." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%B3%3C/text%3E%3C/svg%3E" />
-  <style>
-    :root {
-      --orange: #ff6a13;
-      --orange-dark: #e85a00;
-      --ink: #111111;
-      --muted: #5b5b5b;
-      --line: #ececec;
-      --bg: #ffffff;
-      --soft: #fff7f1;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      color: var(--ink); background: var(--bg); line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-    }
-    a { color: var(--orange); text-decoration: none; }
-    h1, h2, h3 { letter-spacing: -0.02em; margin: 0 0 12px; }
-    p { color: var(--muted); margin: 0 0 12px; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Try DinnersDunn Free — Live AI Chef Demo</title>
+<meta name="description" content="Try DinnersDunn free. Add your ingredients, tell Chef your diet, and watch AI plan your dinner in real time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,800;0,900;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --orange:#FF6B2B;--orange-light:#FF8C5A;
+  --orange-dim:rgba(255,107,43,0.1);--orange-dim2:rgba(255,107,43,0.06);
+  --dark:#111111;--dark2:#1E1E1E;
+  --gray:#6B7280;--gray-light:#F8F8F8;--gray-mid:#E5E7EB;
+  --white:#FFFFFF;--text:#111111;--text2:#4B5563;--text3:#9CA3AF;
+  --green:#16A34A;--green-light:#DCFCE7;
+  --red:#DC2626;--red-light:#FEF2F2;
+  --radius:16px;--radius-sm:10px;
+  --shadow:0 4px 24px rgba(0,0,0,0.06);
+  --shadow-md:0 8px 40px rgba(0,0,0,0.1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--gray-light);color:var(--text);overflow-x:hidden;font-size:15px;line-height:1.6}
 
-    header {
-      position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.9);
-      backdrop-filter: saturate(180%) blur(10px); border-bottom: 1px solid var(--line);
-    }
-    .nav { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
-    .logo { font-weight: 800; font-size: 20px; }
-    .logo span { color: var(--orange); }
-    .nav a { color: var(--ink); font-weight: 500; font-size: 15px; }
-    .nav a:hover { color: var(--orange); }
-    .btn {
-      display: inline-block; padding: 10px 18px; border-radius: 999px;
-      background: var(--orange); color: #fff; font-weight: 600; font-size: 14px;
-      border: 2px solid var(--orange); cursor: pointer; transition: all .15s ease;
-    }
-    .btn:hover { background: var(--orange-dark); border-color: var(--orange-dark); color: #fff; }
-    .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
-    .btn.ghost:hover { border-color: var(--orange); color: var(--orange); }
-    .btn[disabled] { opacity: .55; cursor: not-allowed; }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--gray-mid)}
+.nav-brand{display:flex;flex-direction:column;line-height:1}
+.nav-presents{font-size:9px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);margin-bottom:1px}
+.nav-logo{font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:var(--dark);text-decoration:none;letter-spacing:-0.5px}
+.nav-logo span{color:var(--orange)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-back{font-size:13px;font-weight:500;color:var(--text2);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .15s}
+.nav-back:hover{color:var(--orange)}
+.nav-cta{background:var(--orange);color:var(--white);padding:9px 20px;border-radius:100px;font-size:13px;font-weight:700;text-decoration:none;transition:all .15s;white-space:nowrap}
+.nav-cta:hover{background:var(--orange-light);transform:translateY(-1px)}
 
-    .hero { padding: 48px 0 24px; text-align: center; }
-    .eyebrow {
-      display: inline-block; padding: 6px 14px; border-radius: 999px;
-      background: var(--soft); color: var(--orange-dark); font-weight: 600;
-      font-size: 13px; margin-bottom: 16px;
-    }
-    h1 { font-size: clamp(32px, 4.5vw, 48px); }
+/* HERO BAND */
+.demo-hero{background:var(--dark);padding:100px 48px 40px;text-align:center}
+.demo-tag{display:inline-flex;align-items:center;gap:8px;background:var(--orange-dim);color:var(--orange);padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:0.04em;margin-bottom:20px}
+.demo-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,58px);font-weight:900;line-height:1.05;letter-spacing:-1.5px;color:var(--white);margin-bottom:16px}
+.demo-title span{color:var(--orange)}
+.demo-sub{font-size:16px;color:rgba(255,255,255,0.45);max-width:520px;margin:0 auto 0;line-height:1.7}
+.demo-limits{display:flex;justify-content:center;gap:24px;margin-top:24px;flex-wrap:wrap}
+.demo-limit{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.3)}
+.demo-limit .dot{width:6px;height:6px;border-radius:50%;background:var(--orange)}
 
-    .demo {
-      display: grid; grid-template-columns: 360px 1fr; gap: 24px;
-      padding: 24px 0 80px;
-    }
-    @media (max-width: 900px) { .demo { grid-template-columns: 1fr; } }
+/* MAIN LAYOUT */
+.demo-main{max-width:1100px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
 
-    .panel {
-      background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px;
-    }
-    .panel h3 { font-size: 16px; margin-bottom: 8px; }
-    .panel .hint { font-size: 13px; color: #999; margin-bottom: 12px; }
+/* SETUP PANEL */
+.setup-panel{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-mid);overflow:hidden;position:sticky;top:84px}
+.panel-section{padding:20px;border-bottom:1px solid var(--gray-mid)}
+.panel-section:last-child{border-bottom:none}
+.panel-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.panel-label span{font-size:10px;font-weight:600;background:var(--orange-dim);color:var(--orange);padding:2px 8px;border-radius:100px;letter-spacing:0}
 
-    .ing-row { display: flex; gap: 8px; margin-bottom: 12px; }
-    .ing-row input {
-      flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line);
-      font-size: 14px; outline: none;
-    }
-    .ing-row input:focus { border-color: var(--orange); }
-    .ing-list { display: flex; flex-wrap: wrap; gap: 6px; min-height: 8px; margin-bottom: 16px; }
-    .ing {
-      background: var(--soft); color: var(--orange-dark); padding: 6px 10px;
-      border-radius: 999px; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;
-    }
-    .ing button {
-      background: transparent; border: 0; color: var(--orange-dark); cursor: pointer; font-size: 14px;
-      padding: 0; line-height: 1;
-    }
+/* INGREDIENT INPUT */
+.ing-input-row{display:flex;gap:8px;margin-bottom:10px}
+.ing-input{flex:1;padding:9px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--gray-mid);background:var(--gray-light);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .15s}
+.ing-input:focus{border-color:var(--orange);background:var(--white)}
+.ing-add-btn{background:var(--orange);color:var(--white);border:none;border-radius:var(--radius-sm);padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s;white-space:nowrap}
+.ing-add-btn:hover{background:var(--orange-light)}
+.ing-tags{display:flex;flex-wrap:wrap;gap:6px}
+.ing-tag{display:inline-flex;align-items:center;gap:5px;background:var(--orange-dim2);border:1px solid rgba(255,107,43,0.2);color:var(--dark);padding:5px 10px;border-radius:100px;font-size:12px;font-weight:500}
+.ing-tag .remove{cursor:pointer;color:var(--text3);font-size:14px;line-height:1;transition:color .15s}
+.ing-tag .remove:hover{color:var(--red)}
+.ing-suggestions{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.ing-sug{font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;border:1px solid var(--gray-mid);color:var(--text3);cursor:pointer;transition:all .15s;background:var(--white)}
+.ing-sug:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-dim2)}
 
-    .group { margin-bottom: 18px; }
-    .group label { font-size: 13px; font-weight: 600; display: block; margin-bottom: 6px; }
-    .pill-list { display: flex; flex-wrap: wrap; gap: 6px; }
-    .pill {
-      padding: 6px 12px; border-radius: 999px; background: #fff;
-      border: 1px solid var(--line); font-size: 13px; cursor: pointer; user-select: none;
-    }
-    .pill.on { background: var(--orange); color: #fff; border-color: var(--orange); }
+/* DIET TAGS */
+.diet-tags{display:flex;flex-wrap:wrap;gap:6px}
+.diet-tag{font-size:12px;font-weight:600;padding:6px 12px;border-radius:100px;border:1.5px solid var(--gray-mid);color:var(--text2);cursor:pointer;transition:all .15s;background:var(--white)}
+.diet-tag:hover{border-color:var(--orange);color:var(--orange)}
+.diet-tag.active{background:var(--orange);border-color:var(--orange);color:var(--white)}
+.allergy-tag{font-size:12px;font-weight:600;padding:6px 12px;border-radius:100px;border:1.5px solid var(--gray-mid);color:var(--text2);cursor:pointer;transition:all .15s;background:var(--white)}
+.allergy-tag:hover{border-color:var(--red);color:var(--red)}
+.allergy-tag.active{background:var(--red-light);border-color:var(--red);color:var(--red)}
 
-    .chat-wrap { display: flex; flex-direction: column; min-height: 540px; }
-    .chat {
-      flex: 1; background: #fff; border: 1px solid var(--line); border-radius: 16px;
-      padding: 20px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto;
-      max-height: 540px;
-    }
-    .msg { max-width: 80%; padding: 12px 16px; border-radius: 16px; font-size: 15px; line-height: 1.5; white-space: pre-wrap; }
-    .msg.user { align-self: flex-end; background: var(--orange); color: #fff; border-bottom-right-radius: 4px; }
-    .msg.bot { align-self: flex-start; background: #f5f5f5; color: var(--ink); border-bottom-left-radius: 4px; }
-    .msg.bot.system { background: var(--soft); color: var(--orange-dark); font-size: 14px; }
-    .typing { font-style: italic; color: #999; font-size: 14px; }
+/* CHAT PANEL */
+.chat-panel{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-mid);overflow:hidden;display:flex;flex-direction:column}
 
-    .ask {
-      display: flex; gap: 8px; margin-top: 12px;
-      background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 8px;
-    }
-    .ask input {
-      flex: 1; border: 0; outline: none; padding: 10px 12px; font-size: 15px; background: transparent;
-    }
-    .ask .meter { font-size: 12px; color: #999; align-self: center; padding: 0 8px; white-space: nowrap; }
+/* CHAT HEADER */
+.chat-header{padding:16px 20px;border-bottom:1px solid var(--gray-mid);display:flex;align-items:center;gap:12px;background:var(--white)}
+.chef-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-light));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.chef-name{font-size:14px;font-weight:700;color:var(--dark)}
+.chef-status{font-size:11px;color:var(--green);font-weight:600;display:flex;align-items:center;gap:4px}
+.chef-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green)}
+.demo-badge{margin-left:auto;background:var(--orange-dim);color:var(--orange);font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:0.04em}
 
-    /* Upgrade wall */
-    .wall {
-      display: none; position: fixed; inset: 0; background: rgba(17,17,17,0.55);
-      z-index: 100; align-items: center; justify-content: center; padding: 20px;
-    }
-    .wall.show { display: flex; }
-    .wall-card {
-      background: #fff; border-radius: 20px; max-width: 480px; width: 100%; padding: 32px;
-      text-align: center; box-shadow: 0 30px 80px rgba(0,0,0,0.2);
-    }
-    .wall-card h2 { font-size: 26px; }
-    .wall form { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; justify-content: center; }
-    .wall input[type=email] {
-      flex: 1; min-width: 220px; padding: 12px 16px; border-radius: 999px;
-      border: 1px solid var(--line); font-size: 15px; outline: none;
-    }
-    .wall input[type=email]:focus { border-color: var(--orange); }
-    .wall .ok { display: none; color: #1b8a3a; margin-top: 12px; }
-    .wall .small { font-size: 12px; color: #999; margin-top: 12px; }
-    .wall .close { background: transparent; border: 0; color: #999; cursor: pointer; font-size: 13px; margin-top: 8px; }
-  </style>
+/* MESSAGES */
+.messages{padding:20px;display:flex;flex-direction:column;gap:12px;min-height:400px;max-height:560px;overflow-y:auto}
+.msg-row{display:flex;gap:10px;align-items:flex-start}
+.msg-row.user{flex-direction:row-reverse}
+.msg-avatar-sm{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px}
+.msg-avatar-chef{background:linear-gradient(135deg,var(--orange),var(--orange-light))}
+.msg-avatar-user{background:var(--gray-mid)}
+.bubble{max-width:85%;padding:12px 16px;border-radius:18px;font-size:14px;line-height:1.65}
+.bubble-chef{background:var(--orange);color:var(--white);border-radius:4px 18px 18px 18px}
+.bubble-user{background:var(--gray-light);color:var(--dark);border-radius:18px 4px 18px 18px;border:1px solid var(--gray-mid)}
+.bubble strong{font-weight:700}
+.bubble ul{margin:8px 0 0 16px;display:flex;flex-direction:column;gap:4px}
+.bubble ul li{font-size:13px}
+
+/* TYPING */
+.typing-bubble{background:var(--orange);border-radius:4px 18px 18px 18px;padding:14px 18px;display:flex;gap:5px;align-items:center;width:fit-content}
+.typing-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.7);animation:tdot 0.8s infinite}
+.typing-dot:nth-child(2){animation-delay:0.15s}
+.typing-dot:nth-child(3){animation-delay:0.3s}
+@keyframes tdot{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+
+/* QUICK CHIPS */
+.quick-chips{padding:12px 20px;border-top:1px solid var(--gray-mid);display:flex;flex-wrap:wrap;gap:6px;background:var(--gray-light)}
+.qchip{font-size:12px;font-weight:600;padding:7px 14px;border-radius:100px;border:1.5px solid var(--gray-mid);color:var(--text2);cursor:pointer;transition:all .15s;background:var(--white)}
+.qchip:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-dim2)}
+.qchip:disabled{opacity:0.4;cursor:not-allowed}
+
+/* CHAT INPUT */
+.chat-input-row{padding:16px 20px;border-top:1px solid var(--gray-mid);display:flex;gap:10px;background:var(--white)}
+.chat-input{flex:1;padding:11px 16px;border-radius:100px;border:1.5px solid var(--gray-mid);background:var(--gray-light);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:all .15s}
+.chat-input:focus{border-color:var(--orange);background:var(--white)}
+.chat-input::placeholder{color:var(--text3)}
+.chat-send{background:var(--orange);color:var(--white);border:none;border-radius:100px;padding:11px 22px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+.chat-send:hover{background:var(--orange-light)}
+.chat-send:disabled{opacity:0.5;cursor:not-allowed}
+
+/* USAGE BAR */
+.usage-bar{padding:12px 20px;background:var(--gray-light);border-top:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.usage-label{font-size:11px;font-weight:600;color:var(--text3)}
+.usage-track{flex:1;height:4px;background:var(--gray-mid);border-radius:2px;overflow:hidden}
+.usage-fill{height:100%;background:var(--orange);border-radius:2px;transition:width .4s ease}
+.usage-count{font-size:11px;font-weight:700;color:var(--orange)}
+
+/* UPGRADE WALL */
+.upgrade-wall{padding:24px;background:linear-gradient(135deg,#FFF7F4,#FFF3EE);border-top:1px solid rgba(255,107,43,0.15);display:none}
+.upgrade-wall.visible{display:block}
+.upgrade-title{font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:var(--dark);margin-bottom:8px;letter-spacing:-0.5px}
+.upgrade-sub{font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.65}
+.upgrade-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.upgrade-feature{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--text2)}
+.upgrade-feature::before{content:'✓';color:var(--orange);font-weight:700}
+.upgrade-form{display:flex;gap:0;background:var(--white);border:1.5px solid var(--gray-mid);border-radius:100px;padding:5px 5px 5px 16px;box-shadow:var(--shadow)}
+.upgrade-input{flex:1;border:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);outline:none}
+.upgrade-input::placeholder{color:var(--text3)}
+.upgrade-btn{background:var(--orange);color:var(--white);border:none;padding:10px 20px;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s;white-space:nowrap}
+.upgrade-btn:hover{background:var(--orange-light)}
+.upgrade-note{font-size:11px;color:var(--text3);margin-top:8px;text-align:center}
+
+/* WHAT'S LOCKED */
+.locked-features{display:flex;gap:8px;padding:16px 20px;background:var(--gray-light);border-top:1px solid var(--gray-mid);flex-wrap:wrap}
+.locked-feat{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--text3);background:var(--white);border:1px solid var(--gray-mid);padding:5px 10px;border-radius:100px}
+.lock-icon{font-size:11px}
+
+/* RESPONSIVE */
+@media(max-width:860px){
+  nav{padding:0 20px}
+  .demo-hero{padding:80px 24px 32px}
+  .demo-main{grid-template-columns:1fr;padding:20px 16px 60px}
+  .setup-panel{position:static}
+  .messages{max-height:400px}
+}
+@media(max-width:600px){
+  .nav-back{display:none}
+  .upgrade-features{grid-template-columns:1fr}
+  .demo-limits{gap:14px}
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <a class="logo" href="/">Dinners<span>Dunn</span></a>
-      <nav class="nav" style="gap:18px">
-        <a href="/">Home</a>
-        <a href="/#pricing">Pricing</a>
-        <a href="/#waitlist" class="btn">Join waitlist</a>
-      </nav>
-    </div>
-  </header>
 
-  <main class="container">
-    <section class="hero">
-      <span class="eyebrow">Live demo · Powered by Claude</span>
-      <h1>Cook with a real AI chef.</h1>
-      <p>Add what's in your fridge, lock in your diet and allergies, then ask anything. <strong>5 free questions</strong> on us.</p>
-    </section>
+<nav>
+  <div class="nav-brand">
+    <div class="nav-presents">Chef Matt Dunn presents</div>
+    <a href="/" class="nav-logo">Dinners<span>Dunn</span></a>
+  </div>
+  <div class="nav-right">
+    <a href="/" class="nav-back">← Back to site</a>
+    <a href="#signup" class="nav-cta">Join Waitlist</a>
+  </div>
+</nav>
 
-    <section class="demo">
-      <aside class="panel" aria-label="Your kitchen">
-        <h3>Your fridge</h3>
-        <div class="hint">Add ingredients you have on hand.</div>
-        <form class="ing-row" id="ingForm" onsubmit="event.preventDefault(); addIngredient();">
-          <input id="ingInput" placeholder="e.g. chicken thighs" autocomplete="off" />
-          <button class="btn" type="submit">Add</button>
-        </form>
-        <div class="ing-list" id="ingList"></div>
+<div class="demo-hero">
+  <div class="demo-tag">🍽️ Live Demo — Real AI</div>
+  <h1 class="demo-title">Meet your AI chef.<br><span>Try it free.</span></h1>
+  <p class="demo-sub">Add what's in your fridge, set your diet, and ask Chef anything. This is the real thing — powered by AI.</p>
+  <div class="demo-limits">
+    <div class="demo-limit"><div class="dot"></div>5 free questions</div>
+    <div class="demo-limit"><div class="dot"></div>Real AI responses</div>
+    <div class="demo-limit"><div class="dot"></div>No signup needed</div>
+    <div class="demo-limit"><div class="dot"></div>Full version on waitlist</div>
+  </div>
+</div>
 
-        <div class="group">
-          <label>Diet</label>
-          <div class="pill-list" id="dietList">
-            <span class="pill" data-val="none">No restriction</span>
-            <span class="pill" data-val="vegetarian">Vegetarian</span>
-            <span class="pill" data-val="vegan">Vegan</span>
-            <span class="pill" data-val="pescatarian">Pescatarian</span>
-            <span class="pill" data-val="keto">Keto</span>
-            <span class="pill" data-val="paleo">Paleo</span>
-            <span class="pill" data-val="halal">Halal</span>
-            <span class="pill" data-val="kosher">Kosher</span>
-            <span class="pill" data-val="gluten-free">Gluten-free</span>
-          </div>
-        </div>
+<div class="demo-main">
 
-        <div class="group">
-          <label>Allergies</label>
-          <div class="pill-list" id="allergyList">
-            <span class="pill" data-val="peanuts">Peanuts</span>
-            <span class="pill" data-val="tree-nuts">Tree nuts</span>
-            <span class="pill" data-val="dairy">Dairy</span>
-            <span class="pill" data-val="eggs">Eggs</span>
-            <span class="pill" data-val="shellfish">Shellfish</span>
-            <span class="pill" data-val="fish">Fish</span>
-            <span class="pill" data-val="soy">Soy</span>
-            <span class="pill" data-val="wheat">Wheat</span>
-            <span class="pill" data-val="sesame">Sesame</span>
-          </div>
-        </div>
-      </aside>
-
-      <div class="chat-wrap">
-        <div class="chat" id="chat">
-          <div class="msg bot system">
-            👨‍🍳 Hey, I'm your DinnersDunn chef. Add what's in your fridge on the left, pick your diet and allergies, then ask me anything — "what should I make tonight?", "swap the chicken", "make it kid-friendly".
-          </div>
-        </div>
-        <form class="ask" id="askForm" onsubmit="event.preventDefault(); send();">
-          <input id="askInput" placeholder="Ask the chef…" autocomplete="off" />
-          <span class="meter" id="meter">5 free questions left</span>
-          <button class="btn" id="sendBtn" type="submit">Send</button>
-        </form>
+  <!-- SETUP PANEL -->
+  <div class="setup-panel">
+    <div class="panel-section">
+      <div class="panel-label">Your fridge <span id="ing-count">0 items</span></div>
+      <div class="ing-input-row">
+        <input type="text" class="ing-input" id="ing-input" placeholder="Add an ingredient..." onkeydown="if(event.key==='Enter')addIngredient()">
+        <button class="ing-add-btn" onclick="addIngredient()">Add</button>
       </div>
-    </section>
-  </main>
+      <div class="ing-tags" id="ing-tags"></div>
+      <div class="ing-suggestions" id="ing-sug-list"></div>
+    </div>
 
-  <div class="wall" id="wall" role="dialog" aria-modal="true" aria-labelledby="wallTitle">
-    <div class="wall-card">
-      <span class="eyebrow">You used your 5 free questions</span>
-      <h2 id="wallTitle">Want unlimited chef chat?</h2>
-      <p>Join the waitlist and we'll let you in to the full DinnersDunn — saved taste profile, family-mode, smart shopping list, and unlimited chef.</p>
-      <form name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="wallForm" onsubmit="return wallSubmit(event)">
-        <input type="hidden" name="form-name" value="waitlist" />
-        <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
-        <input type="email" name="email" placeholder="you@dinner.com" required />
-        <button class="btn" type="submit">Join waitlist</button>
-      </form>
-      <div class="ok" id="wallOk">You're on the list. We'll be in touch — bring an appetite.</div>
-      <div class="small">No spam. Unsubscribe anytime.</div>
-      <button class="close" type="button" onclick="document.getElementById('wall').classList.remove('show')">Close</button>
+    <div class="panel-section">
+      <div class="panel-label">Your diet</div>
+      <div class="diet-tags" id="diet-tags"></div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Allergies</div>
+      <div class="diet-tags" id="allergy-tags"></div>
+    </div>
+
+    <div class="panel-section">
+      <div class="panel-label">Locked in full version</div>
+      <div class="locked-features">
+        <div class="locked-feat"><span class="lock-icon">🔒</span> Fridge photo scan</div>
+        <div class="locked-feat"><span class="lock-icon">🔒</span> Weekly meal plan</div>
+        <div class="locked-feat"><span class="lock-icon">🔒</span> Grocery ordering</div>
+        <div class="locked-feat"><span class="lock-icon">🔒</span> "Hey Chef" voice</div>
+        <div class="locked-feat"><span class="lock-icon">🔒</span> Expiry alerts</div>
+        <div class="locked-feat"><span class="lock-icon">🔒</span> Nutrition tracking</div>
+      </div>
     </div>
   </div>
 
-  <script>
-    const state = {
-      ingredients: [],
-      diet: 'none',
-      allergies: new Set(),
-      asked: 0,
-      max: 5,
-      history: []
-    };
+  <!-- CHAT PANEL -->
+  <div class="chat-panel">
+    <div class="chat-header">
+      <div class="chef-avatar">👨‍🍳</div>
+      <div>
+        <div class="chef-name">Chef Matt — DinnersDunn</div>
+        <div class="chef-status">Online — ready to help</div>
+      </div>
+      <div class="demo-badge">Free Demo</div>
+    </div>
 
-    // INGREDIENTS
-    function addIngredient() {
-      const inp = document.getElementById('ingInput');
-      const val = (inp.value || '').trim();
-      if (!val) return;
-      if (!state.ingredients.includes(val.toLowerCase())) {
-        state.ingredients.push(val.toLowerCase());
-      }
-      inp.value = '';
-      renderIngredients();
-    }
-    function removeIngredient(i) {
-      state.ingredients.splice(i, 1);
-      renderIngredients();
-    }
-    function renderIngredients() {
-      const list = document.getElementById('ingList');
-      list.innerHTML = '';
-      state.ingredients.forEach((ing, i) => {
-        const span = document.createElement('span');
-        span.className = 'ing';
-        span.innerHTML = '• ' + ing + ' <button aria-label="remove">×</button>';
-        span.querySelector('button').addEventListener('click', () => removeIngredient(i));
-        list.appendChild(span);
-      });
-    }
+    <div class="messages" id="messages">
+      <div class="msg-row">
+        <div class="msg-avatar-sm msg-avatar-chef">👨‍🍳</div>
+        <div class="bubble bubble-chef">
+          Hey! I'm Chef Matt. Add your ingredients on the left, set your diet, and ask me anything — what to cook tonight, recipe ideas, what's expiring, how to use random ingredients. I'm here.<br><br>
+          <strong>Try asking me something below 👇</strong>
+        </div>
+      </div>
+    </div>
 
-    // DIET (single-select)
-    document.getElementById('dietList').addEventListener('click', (e) => {
-      const p = e.target.closest('.pill'); if (!p) return;
-      document.querySelectorAll('#dietList .pill').forEach(x => x.classList.remove('on'));
-      p.classList.add('on');
-      state.diet = p.dataset.val;
-    });
+    <div class="quick-chips" id="quick-chips">
+      <button class="qchip" onclick="sendQuick(this,'What can I make tonight with what I have?')">🧊 What can I make tonight?</button>
+      <button class="qchip" onclick="sendQuick(this,'Give me a quick 20-minute dinner idea')">⚡ Quick 20-min dinner</button>
+      <button class="qchip" onclick="sendQuick(this,'What should I make this week? Give me 5 dinner ideas')">📅 Plan my week</button>
+      <button class="qchip" onclick="sendQuick(this,'Surprise me with something I wouldn\'t normally make')">🎲 Surprise me</button>
+      <button class="qchip" onclick="sendQuick(this,'What groceries should I buy this week based on my diet?')">🛒 Shopping list</button>
+    </div>
 
-    // ALLERGIES (multi-select)
-    document.getElementById('allergyList').addEventListener('click', (e) => {
-      const p = e.target.closest('.pill'); if (!p) return;
-      const v = p.dataset.val;
-      if (state.allergies.has(v)) { state.allergies.delete(v); p.classList.remove('on'); }
-      else { state.allergies.add(v); p.classList.add('on'); }
-    });
+    <div class="chat-input-row">
+      <input type="text" class="chat-input" id="chat-input" placeholder="Ask Chef anything..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button class="chat-send" id="send-btn" onclick="sendMessage()">Ask Chef →</button>
+    </div>
 
-    // CHAT
-    function appendMsg(text, who) {
-      const chat = document.getElementById('chat');
-      const div = document.createElement('div');
-      div.className = 'msg ' + who;
-      div.textContent = text;
-      chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
-      return div;
-    }
-    function appendTyping() {
-      const chat = document.getElementById('chat');
-      const div = document.createElement('div');
-      div.className = 'msg bot typing';
-      div.id = 'typing';
-      div.textContent = 'Chef is thinking…';
-      chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
-    }
-    function removeTyping() {
-      const t = document.getElementById('typing');
-      if (t) t.remove();
-    }
-    function updateMeter() {
-      const left = Math.max(0, state.max - state.asked);
-      document.getElementById('meter').textContent = left + ' free question' + (left === 1 ? '' : 's') + ' left';
-      if (left === 0) {
-        document.getElementById('sendBtn').disabled = true;
-        document.getElementById('askInput').disabled = true;
-      }
-    }
+    <div class="usage-bar">
+      <div class="usage-label">Free questions used</div>
+      <div class="usage-track"><div class="usage-fill" id="usage-fill" style="width:0%"></div></div>
+      <div class="usage-count" id="usage-count">0 / 5</div>
+    </div>
 
-    async function send() {
-      if (state.asked >= state.max) {
-        document.getElementById('wall').classList.add('show');
-        return;
-      }
-      const inp = document.getElementById('askInput');
-      const q = (inp.value || '').trim();
-      if (!q) return;
-      inp.value = '';
-      appendMsg(q, 'user');
-      state.history.push({ role: 'user', content: q });
-      state.asked++;
-      updateMeter();
-      appendTyping();
+    <div class="upgrade-wall" id="upgrade-wall">
+      <div class="upgrade-title">You've seen what Chef can do. 🔥</div>
+      <div class="upgrade-sub">The full DinnersDunn experience includes fridge photo scanning, unlimited Chef conversations, weekly meal planning, grocery delivery, voice mode, and full nutrition tracking — all personalized to your family.</div>
+      <div class="upgrade-features">
+        <div class="upgrade-feature">Unlimited AI Chef questions</div>
+        <div class="upgrade-feature">Fridge photo scanning</div>
+        <div class="upgrade-feature">Full weekly meal plans</div>
+        <div class="upgrade-feature">Grocery delivery integration</div>
+        <div class="upgrade-feature">"Hey Chef" voice mode</div>
+        <div class="upgrade-feature">Nutrition & macro tracking</div>
+        <div class="upgrade-feature">All diets & 14 allergies</div>
+        <div class="upgrade-feature">Expiry date alerts</div>
+      </div>
+      <form name="waitlist-demo" method="POST" data-netlify="true" id="signup" onsubmit="handleSignup(event)">
+        <input type="hidden" name="form-name" value="waitlist-demo">
+        <div class="upgrade-form">
+          <input type="email" name="email" class="upgrade-input" placeholder="Your email — join the waitlist" required>
+          <button type="submit" class="upgrade-btn">Get Early Access 🚀</button>
+        </div>
+      </form>
+      <div class="upgrade-note" id="signup-note">No spam. Just a message when DinnersDunn launches. Early access + founder pricing.</div>
+    </div>
+  </div>
 
-      try {
-        const reply = await callChef(q);
-        removeTyping();
-        appendMsg(reply, 'bot');
-        state.history.push({ role: 'assistant', content: reply });
-      } catch (err) {
-        removeTyping();
-        appendMsg("I had trouble reaching the chef just now. Mind trying that again in a moment?", 'bot');
-      }
+</div>
 
-      if (state.asked >= state.max) {
-        setTimeout(() => document.getElementById('wall').classList.add('show'), 600);
-      }
-    }
+<script>
+const DIETS = ['Keto','Paleo','Vegan','Vegetarian','Mediterranean','Whole30','Low-carb','Gluten-free','Dairy-free','High-protein','Carnivore','Pescatarian'];
+const ALLERGIES = ['Nuts','Peanuts','Shellfish','Fish','Eggs','Dairy','Gluten','Soy','Sesame','Nightshades'];
+const SUGGESTIONS = ['Chicken breast','Eggs','Broccoli','Salmon','Ground beef','Spinach','Tomatoes','Onions','Garlic','Cheddar cheese','Milk','Butter','Rice','Pasta','Potatoes','Carrots','Bell peppers','Zucchini','Avocado','Greek yogurt'];
 
-    function buildSystemPrompt() {
-      const ing = state.ingredients.length ? state.ingredients.join(', ') : '(none added yet)';
-      const allergies = state.allergies.size ? Array.from(state.allergies).join(', ') : 'none';
-      return [
-        "You are Chef Matt, a warm, practical AI chef for DinnersDunn.",
-        "You answer in a friendly, concise voice. You suggest dinners that actually work for tired humans on weeknights.",
-        "Always respect the user's diet and allergies. Never suggest an ingredient that conflicts.",
-        "Prefer recipes that use what they already have. Keep instructions tight and skimmable.",
-        "",
-        "User profile:",
-        "- Diet: " + state.diet,
-        "- Allergies: " + allergies,
-        "- Ingredients on hand: " + ing
-      ].join('
-');
-    }
+let ingredients = [];
+let selectedDiets = new Set();
+let selectedAllergies = new Set();
+let questionCount = 0;
+const MAX_QUESTIONS = 5;
+let isLoading = false;
 
-    async function callChef(question) {
-      const payload = {
+function buildSystemPrompt() {
+  const ings = ingredients.length > 0 ? ingredients.join(', ') : 'nothing specified yet';
+  const diets = selectedDiets.size > 0 ? [...selectedDiets].join(', ') : 'no specific diet';
+  const allergies = selectedAllergies.size > 0 ? [...selectedAllergies].join(', ') : 'none';
+  return `You are Chef Matt, the friendly AI kitchen assistant inside DinnersDunn — an app built by Chef Matt Dunn, a classically trained chef with 20 years in professional kitchens including Marriott Hotels, his own pizzeria, and wedding catering.
+
+Current user's fridge contains: ${ings}
+Diet: ${diets}
+Allergies (NEVER suggest these): ${allergies}
+
+Rules:
+- Be warm, specific, and conversational — like a knowledgeable friend in the kitchen
+- Always reference actual ingredients the user has when making suggestions
+- Never suggest anything containing their allergens — not even traces
+- Keep responses concise — 3-5 sentences max, or a short list
+- Use occasional food emojis naturally
+- If they haven't added ingredients yet, gently encourage them to add some and give a general helpful tip
+- Always end with an offer to help with the next step (recipe steps, shopping list, alternatives)
+- This is a demo — you can mention that the full app includes fridge photo scanning, voice mode, grocery ordering, and weekly meal planning`;
+}
+
+function renderDiets() {
+  const c = document.getElementById('diet-tags');
+  c.innerHTML = DIETS.map(d => `<span class="diet-tag ${selectedDiets.has(d)?'active':''}" onclick="toggleDiet('${d}')">${d}</span>`).join('');
+}
+
+function renderAllergies() {
+  const c = document.getElementById('allergy-tags');
+  c.innerHTML = ALLERGIES.map(a => `<span class="allergy-tag ${selectedAllergies.has(a)?'active':''}" onclick="toggleAllergy('${a}')">🚫 ${a}</span>`).join('');
+}
+
+function toggleDiet(d) {
+  if(selectedDiets.has(d)) selectedDiets.delete(d); else selectedDiets.add(d);
+  renderDiets();
+}
+
+function toggleAllergy(a) {
+  if(selectedAllergies.has(a)) selectedAllergies.delete(a); else selectedAllergies.add(a);
+  renderAllergies();
+}
+
+function renderIngredients() {
+  const c = document.getElementById('ing-tags');
+  c.innerHTML = ingredients.map((ing,i) => `
+    <span class="ing-tag">${ing}<span class="remove" onclick="removeIng(${i})">×</span></span>
+  `).join('');
+  document.getElementById('ing-count').textContent = ingredients.length + ' item' + (ingredients.length !== 1 ? 's' : '');
+  renderSuggestions();
+}
+
+function renderSuggestions() {
+  const remaining = SUGGESTIONS.filter(s => !ingredients.map(i=>i.toLowerCase()).includes(s.toLowerCase())).slice(0, 8);
+  document.getElementById('ing-sug-list').innerHTML = remaining.map(s => `<span class="ing-sug" onclick="addSuggestion('${s}')">+ ${s}</span>`).join('');
+}
+
+function addIngredient() {
+  const input = document.getElementById('ing-input');
+  const val = input.value.trim();
+  if (!val || ingredients.includes(val)) { input.value=''; return; }
+  ingredients.push(val);
+  input.value = '';
+  renderIngredients();
+}
+
+function addSuggestion(s) {
+  if (!ingredients.includes(s)) { ingredients.push(s); renderIngredients(); }
+}
+
+function removeIng(i) {
+  ingredients.splice(i, 1);
+  renderIngredients();
+}
+
+function addMessage(role, text) {
+  const msgs = document.getElementById('messages');
+  const row = document.createElement('div');
+  row.className = 'msg-row' + (role==='user'?' user':'');
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar-sm ' + (role==='user'?'msg-avatar-user':'msg-avatar-chef');
+  avatar.textContent = role==='user' ? '👤' : '👨‍🍳';
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble ' + (role==='user'?'bubble-user':'bubble-chef');
+  bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+  return row;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('messages');
+  const row = document.createElement('div');
+  row.className = 'msg-row';
+  row.id = 'typing-row';
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar-sm msg-avatar-chef';
+  avatar.textContent = '👨‍🍳';
+  const bubble = document.createElement('div');
+  bubble.className = 'typing-bubble';
+  bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+  row.appendChild(avatar);
+  row.appendChild(bubble);
+  msgs.appendChild(row);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-row');
+  if (t) t.remove();
+}
+
+function updateUsage() {
+  const pct = (questionCount / MAX_QUESTIONS) * 100;
+  document.getElementById('usage-fill').style.width = pct + '%';
+  document.getElementById('usage-count').textContent = questionCount + ' / ' + MAX_QUESTIONS;
+  if (questionCount >= MAX_QUESTIONS) {
+    document.getElementById('upgrade-wall').classList.add('visible');
+    document.getElementById('chat-input').disabled = true;
+    document.getElementById('send-btn').disabled = true;
+    document.querySelectorAll('.qchip').forEach(c => c.disabled = true);
+    document.getElementById('chat-input').placeholder = 'Join the waitlist to keep chatting with Chef...';
+  }
+}
+
+async function sendMessage(customText) {
+  if (isLoading || questionCount >= MAX_QUESTIONS) return;
+  const input = document.getElementById('chat-input');
+  const text = customText || input.value.trim();
+  if (!text) return;
+  input.value = '';
+  isLoading = true;
+  document.getElementById('send-btn').disabled = true;
+
+  addMessage('user', text);
+  showTyping();
+  questionCount++;
+  updateUsage();
+
+  let reply = '';
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
         system: buildSystemPrompt(),
-        messages: state.history.slice(-10)
-      };
-      // Netlify function endpoint that proxies to Claude API.
-      const res = await fetch('/.netlify/functions/chef', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (!res.ok) throw new Error('bad status ' + res.status);
-      const data = await res.json();
-      return (data && data.reply) ? data.reply : "I'm here — ask me what to make.";
-    }
+        messages: [{role: 'user', content: text}]
+      })
+    });
+    const data = await resp.json();
+    reply = data.content?.[0]?.text || getFallback(text);
+  } catch(e) {
+    reply = getFallback(text);
+  }
 
-    // WAITLIST WALL
-    function wallSubmit(e) {
-      // Let Netlify Forms handle the submit; show success inline.
-      const form = e.target;
-      const data = new FormData(form);
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
-      }).then(() => {
-        form.style.display = 'none';
-        document.getElementById('wallOk').style.display = 'block';
-      }).catch(() => {
-        form.style.display = 'none';
-        document.getElementById('wallOk').style.display = 'block';
-      });
-      e.preventDefault();
-      return false;
-    }
+  removeTyping();
+  addMessage('chef', reply);
+  isLoading = false;
+  if (questionCount < MAX_QUESTIONS) {
+    document.getElementById('send-btn').disabled = false;
+  }
+}
 
-    // INIT
-    document.querySelector('#dietList .pill[data-val="none"]').classList.add('on');
-    updateMeter();
-  </script>
+function sendQuick(btn, text) {
+  if (isLoading || questionCount >= MAX_QUESTIONS) return;
+  btn.disabled = true;
+  sendMessage(text);
+}
+
+function getFallback(text) {
+  const t = text.toLowerCase();
+  if (t.includes('make') || t.includes('cook') || t.includes('dinner'))
+    return "Based on what you've got, I'd go with a simple chicken and vegetable stir-fry — quick, satisfying, and works with most ingredients. If you add your specific ingredients I can get much more precise! Want me to walk through a recipe?";
+  if (t.includes('week') || t.includes('plan'))
+    return "For a week of dinners I'd suggest rotating proteins — chicken Monday, fish Wednesday, beef Friday — with flexible veggie sides. Add your ingredients and diet so I can build something specific for you!";
+  return "Great question! Add your ingredients and diet preferences on the left and I'll give you a much more personalized answer. Chef works best when he knows what's actually in your fridge!";
+}
+
+function handleSignup(e) {
+  e.preventDefault();
+  const inp = e.target.querySelector('input[type="email"]');
+  const note = document.getElementById('signup-note');
+  const btn = e.target.querySelector('button');
+  const name = inp.value.split('@')[0];
+  btn.textContent = "✓ You're on the list!";
+  btn.style.background = '#16A34A';
+  note.textContent = 'Welcome, ' + name + '! Chef Matt will reach out when DinnersDunn launches. Check your inbox.';
+  note.style.color = '#16A34A';
+  note.style.fontWeight = '600';
+  inp.disabled = true;
+  btn.disabled = true;
+}
+
+renderDiets();
+renderAllergies();
+renderSuggestions();
+</script>
 </body>
 </html>

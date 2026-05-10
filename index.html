@@ -1,4 +1,4 @@
-undefined<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -554,6 +554,16 @@ footer{
   .waitlist-perks{flex-direction:column;align-items:center;gap:10px}
 }
 </style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:title" content="DinnersDunn — Your AI Chef. Dinner Solved.">
+<meta property="og:description" content="Chef Matt Dunn built the AI meal planning app his family always needed. Scan your fridge, plan your week, order groceries — all with one AI chef who actually knows you.">
+<meta property="og:url" content="https://dinnersdunn.app">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://dinnersdunn.app/images/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DinnersDunn — Your AI Chef. Dinner Solved.">
+<meta name="twitter:description" content="Chef Matt Dunn built the AI meal planning app his family always needed.">
+<meta name="twitter:image" content="https://dinnersdunn.app/images/og-image.png">
 </head>
 <body>
 
@@ -570,6 +580,8 @@ footer{
     <a href="https://www.tiktok.com/@chefmattdunn" target="_blank" class="hide">TikTok</a>
     <a href="/demo" class="hide" style="color:var(--orange);font-weight:600;">Try Demo</a>
     <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
   </div>
 </nav>
 
@@ -926,7 +938,8 @@ footer{
     <div class="waitlist-presents">Chef Matt Dunn presents</div>
     <h2 class="waitlist-title">Dinners<span class="accent">Dunn</span></h2>
     <p class="waitlist-sub">Join the waitlist and be first through the kitchen door. Early access, founder pricing, and a direct line to Chef Matt during beta.</p>
-    <form class="waitlist-form" name="waitlist" method="POST" data-netlify="true" onsubmit="handleWL(event)">
+    <form class="waitlist-form" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thankyou" onsubmit="handleWL(event)">
+      <p style="display:none"><label>Don’t fill this out: <input name="bot-field"></label></p>
       <input type="hidden" name="form-name" value="waitlist">
       <input type="email" name="email" class="waitlist-input" placeholder="Your email address" required>
       <button type="submit" class="waitlist-btn">Join Waitlist →</button>
@@ -1004,6 +1017,14 @@ document.querySelectorAll('.how-step,.feature,.chef-cred,.personal-point,.price-
   el.style.transition='opacity 0.5s ease, transform 0.5s ease';
   io.observe(el);
 });
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J47JE4R6HT"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J47JE4R6HT');
 </script>
 </body>
 </html>

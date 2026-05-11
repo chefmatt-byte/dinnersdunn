@@ -172,11 +172,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <meta property="og:description" content="Chef Matt Dunn built the AI meal planning app his family always needed. Scan your fridge, plan your week, order groceries — all with one AI chef who actually knows you.">
 <meta property="og:url" content="https://dinnersdunn.app">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://dinnersdunn.app/images/og-image.png">
+<meta property="og:image" content="https://dinnersdunn.app/images/og-image.svg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="DinnersDunn — Your AI Chef. Dinner Solved.">
 <meta name="twitter:description" content="Chef Matt Dunn built the AI meal planning app his family always needed.">
-<meta name="twitter:image" content="https://dinnersdunn.app/images/og-image.png">
+<meta name="twitter:image" content="https://dinnersdunn.app/images/og-image.svg">
 </head>
 <body>
 
@@ -499,19 +499,15 @@ function getFallback(text) {
   return "Great question! Add your ingredients and diet preferences on the left and I'll give you a much more personalized answer. Chef works best when he knows what's actually in your fridge!";
 }
 
-function handleSignup(e) {
+function handleSignup(e){
   e.preventDefault();
-  const inp = e.target.querySelector('input[type="email"]');
-  const note = document.getElementById('signup-note');
-  const btn = e.target.querySelector('button');
-  const name = inp.value.split('@')[0];
-  btn.textContent = "✓ You're on the list!";
-  btn.style.background = '#16A34A';
-  note.textContent = 'Welcome, ' + name + '! Chef Matt will reach out when DinnersDunn launches. Check your inbox.';
-  note.style.color = '#16A34A';
-  note.style.fontWeight = '600';
-  inp.disabled = true;
-  btn.disabled = true;
+  const form=e.target;
+  const btn=form.querySelector('button[type="submit"]')||form.querySelector('button');
+  if(btn){btn.disabled=true;btn.textContent='Joining...';}
+  const data=new FormData(form);
+  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()})
+    .then(()=>{window.location='/thankyou';})
+    .catch(()=>{window.location='/thankyou';});
 }
 
 renderDiets();

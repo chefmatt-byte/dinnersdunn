@@ -552,16 +552,14 @@ function toggleScanMenu() {
 
 function startScan(type) {
   document.getElementById('scanMenu').style.display = 'none';
-  const primer = document.getElementById('permissionPrimer');
-  primer.style.display = 'block';
-  setTimeout(() => {
-    primer.style.display = 'none';
-    if (type === 'camera') {
-      document.getElementById('cameraInput').click();
-    } else {
-      document.getElementById('libraryInput').click();
-    }
-  }, 1500);
+  
+  if (type === 'camera') {
+    const input = document.getElementById('cameraInput');
+    input.click();
+  } else {
+    const input = document.getElementById('libraryInput');
+    input.click();
+  }
 }
 
 document.getElementById('cameraInput').addEventListener('change', function() {

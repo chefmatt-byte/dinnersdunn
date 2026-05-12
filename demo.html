@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Try DinnersDunn Free — Live AI Chef Demo</title>
 <meta name="description" content="Try DinnersDunn free. Add your ingredients, tell Chef your diet, and watch AI plan your dinner in real time.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta property="og:title" content="DinnersDunn — Your AI Chef. Dinner Solved.">
+<meta property="og:description" content="Chef Matt Dunn built the AI meal planning app his family always needed.">
+<meta property="og:url" content="https://dinnersdunn.app/demo">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://dinnersdunn.app/images/og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DinnersDunn — Your AI Chef. Dinner Solved.">
+<meta name="twitter:description" content="Chef Matt Dunn built the AI meal planning app his family always needed.">
+<meta name="twitter:image" content="https://dinnersdunn.app/images/og-image.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,700;0,800;0,900;1,700;1,800&display=swap" rel="stylesheet">
 <style>
@@ -23,8 +33,9 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--gray-light);color:var(--text);overflow-x:hidden;font-size:15px;line-height:1.6}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes tdot{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
 
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--gray-mid)}
 .nav-brand{display:flex;flex-direction:column;line-height:1}
 .nav-presents{font-size:9px;font-weight:500;letter-spacing:0.18em;text-transform:uppercase;color:var(--text3);margin-bottom:1px}
@@ -36,27 +47,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-cta{background:var(--orange);color:var(--white);padding:9px 20px;border-radius:100px;font-size:13px;font-weight:700;text-decoration:none;transition:all .15s;white-space:nowrap}
 .nav-cta:hover{background:var(--orange-light);transform:translateY(-1px)}
 
-/* HERO BAND */
 .demo-hero{background:var(--dark);padding:100px 48px 40px;text-align:center}
 .demo-tag{display:inline-flex;align-items:center;gap:8px;background:var(--orange-dim);color:var(--orange);padding:6px 16px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:0.04em;margin-bottom:20px}
 .demo-title{font-family:'Fraunces',serif;font-size:clamp(36px,5vw,58px);font-weight:900;line-height:1.05;letter-spacing:-1.5px;color:var(--white);margin-bottom:16px}
 .demo-title span{color:var(--orange)}
-.demo-sub{font-size:16px;color:rgba(255,255,255,0.45);max-width:520px;margin:0 auto 0;line-height:1.7}
+.demo-sub{font-size:16px;color:rgba(255,255,255,0.45);max-width:520px;margin:0 auto;line-height:1.7}
 .demo-limits{display:flex;justify-content:center;gap:24px;margin-top:24px;flex-wrap:wrap}
 .demo-limit{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.3)}
 .demo-limit .dot{width:6px;height:6px;border-radius:50%;background:var(--orange)}
 
-/* MAIN LAYOUT */
 .demo-main{max-width:1100px;margin:0 auto;padding:32px 24px 80px;display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
 
-/* SETUP PANEL */
-.setup-panel{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-mid);overflow:hidden;position:sticky;top:84px}
+.setup-panel{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-mid);overflow:visible;position:sticky;top:84px;position:relative}
 .panel-section{padding:20px;border-bottom:1px solid var(--gray-mid)}
 .panel-section:last-child{border-bottom:none}
 .panel-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
 .panel-label span{font-size:10px;font-weight:600;background:var(--orange-dim);color:var(--orange);padding:2px 8px;border-radius:100px;letter-spacing:0}
 
-/* INGREDIENT INPUT */
 .ing-input-row{display:flex;gap:8px;margin-bottom:10px}
 .ing-input{flex:1;padding:9px 12px;border-radius:var(--radius-sm);border:1.5px solid var(--gray-mid);background:var(--gray-light);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--text);outline:none;transition:border-color .15s}
 .ing-input:focus{border-color:var(--orange);background:var(--white)}
@@ -70,7 +77,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .ing-sug{font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px;border:1px solid var(--gray-mid);color:var(--text3);cursor:pointer;transition:all .15s;background:var(--white)}
 .ing-sug:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-dim2)}
 
-/* DIET TAGS */
 .diet-tags{display:flex;flex-wrap:wrap;gap:6px}
 .diet-tag{font-size:12px;font-weight:600;padding:6px 12px;border-radius:100px;border:1.5px solid var(--gray-mid);color:var(--text2);cursor:pointer;transition:all .15s;background:var(--white)}
 .diet-tag:hover{border-color:var(--orange);color:var(--orange)}
@@ -79,10 +85,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .allergy-tag:hover{border-color:var(--red);color:var(--red)}
 .allergy-tag.active{background:var(--red-light);border-color:var(--red);color:var(--red)}
 
-/* CHAT PANEL */
 .chat-panel{background:var(--white);border-radius:var(--radius);border:1px solid var(--gray-mid);overflow:hidden;display:flex;flex-direction:column}
-
-/* CHAT HEADER */
 .chat-header{padding:16px 20px;border-bottom:1px solid var(--gray-mid);display:flex;align-items:center;gap:12px;background:var(--white)}
 .chef-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--orange-light));display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
 .chef-name{font-size:14px;font-weight:700;color:var(--dark)}
@@ -90,7 +93,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .chef-status::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green)}
 .demo-badge{margin-left:auto;background:var(--orange-dim);color:var(--orange);font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:0.04em}
 
-/* MESSAGES */
 .messages{padding:20px;display:flex;flex-direction:column;gap:12px;min-height:400px;max-height:560px;overflow-y:auto}
 .msg-row{display:flex;gap:10px;align-items:flex-start}
 .msg-row.user{flex-direction:row-reverse}
@@ -101,23 +103,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .bubble-chef{background:var(--orange);color:var(--white);border-radius:4px 18px 18px 18px}
 .bubble-user{background:var(--gray-light);color:var(--dark);border-radius:18px 4px 18px 18px;border:1px solid var(--gray-mid)}
 .bubble strong{font-weight:700}
-.bubble ul{margin:8px 0 0 16px;display:flex;flex-direction:column;gap:4px}
-.bubble ul li{font-size:13px}
 
-/* TYPING */
 .typing-bubble{background:var(--orange);border-radius:4px 18px 18px 18px;padding:14px 18px;display:flex;gap:5px;align-items:center;width:fit-content}
 .typing-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.7);animation:tdot 0.8s infinite}
 .typing-dot:nth-child(2){animation-delay:0.15s}
 .typing-dot:nth-child(3){animation-delay:0.3s}
-@keyframes tdot{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
 
-/* QUICK CHIPS */
 .quick-chips{padding:12px 20px;border-top:1px solid var(--gray-mid);display:flex;flex-wrap:wrap;gap:6px;background:var(--gray-light)}
 .qchip{font-size:12px;font-weight:600;padding:7px 14px;border-radius:100px;border:1.5px solid var(--gray-mid);color:var(--text2);cursor:pointer;transition:all .15s;background:var(--white)}
 .qchip:hover{border-color:var(--orange);color:var(--orange);background:var(--orange-dim2)}
 .qchip:disabled{opacity:0.4;cursor:not-allowed}
 
-/* CHAT INPUT */
 .chat-input-row{padding:16px 20px;border-top:1px solid var(--gray-mid);display:flex;gap:10px;background:var(--white)}
 .chat-input{flex:1;padding:11px 16px;border-radius:100px;border:1.5px solid var(--gray-mid);background:var(--gray-light);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:all .15s}
 .chat-input:focus{border-color:var(--orange);background:var(--white)}
@@ -126,14 +122,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .chat-send:hover{background:var(--orange-light)}
 .chat-send:disabled{opacity:0.5;cursor:not-allowed}
 
-/* USAGE BAR */
 .usage-bar{padding:12px 20px;background:var(--gray-light);border-top:1px solid var(--gray-mid);display:flex;align-items:center;justify-content:space-between;gap:12px}
 .usage-label{font-size:11px;font-weight:600;color:var(--text3)}
 .usage-track{flex:1;height:4px;background:var(--gray-mid);border-radius:2px;overflow:hidden}
 .usage-fill{height:100%;background:var(--orange);border-radius:2px;transition:width .4s ease}
 .usage-count{font-size:11px;font-weight:700;color:var(--orange)}
 
-/* UPGRADE WALL */
 .upgrade-wall{padding:24px;background:linear-gradient(135deg,#FFF7F4,#FFF3EE);border-top:1px solid rgba(255,107,43,0.15);display:none}
 .upgrade-wall.visible{display:block}
 .upgrade-title{font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:var(--dark);margin-bottom:8px;letter-spacing:-0.5px}
@@ -148,12 +142,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .upgrade-btn:hover{background:var(--orange-light)}
 .upgrade-note{font-size:11px;color:var(--text3);margin-top:8px;text-align:center}
 
-/* WHAT'S LOCKED */
-.locked-features{display:flex;gap:8px;padding:16px 20px;background:var(--gray-light);border-top:1px solid var(--gray-mid);flex-wrap:wrap}
+.locked-features{display:flex;gap:8px;flex-wrap:wrap}
 .locked-feat{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--text3);background:var(--white);border:1px solid var(--gray-mid);padding:5px 10px;border-radius:100px}
 .lock-icon{font-size:11px}
 
-/* RESPONSIVE */
 @media(max-width:860px){
   nav{padding:0 20px}
   .demo-hero{padding:80px 24px 32px}
@@ -165,20 +157,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
   .nav-back{display:none}
   .upgrade-features{grid-template-columns:1fr}
   .demo-limits{gap:14px}
+  .scan-label{display:none}
 }
 </style>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<meta property="og:title" content="DinnersDunn — Your AI Chef. Dinner Solved.">
-<meta property="og:description" content="Chef Matt Dunn built the AI meal planning app his family always needed. Scan your fridge, plan your week, order groceries — all with one AI chef who actually knows you.">
-<meta property="og:url" content="https://dinnersdunn.app">
-<meta property="og:type" content="website">
-<meta property="og:image" content="https://dinnersdunn.app/images/og-image.svg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="DinnersDunn — Your AI Chef. Dinner Solved.">
-<meta name="twitter:description" content="Chef Matt Dunn built the AI meal planning app his family always needed.">
-<meta name="twitter:image" content="https://dinnersdunn.app/images/og-image.svg">
 </head>
 <body>
+
+<input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none">
+<input type="file" id="libraryInput" accept="image/*" style="display:none">
 
 <nav>
   <div class="nav-brand">
@@ -194,7 +180,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <div class="demo-hero">
   <div class="demo-tag">🍽️ Live Demo — Real AI</div>
   <h1 class="demo-title">Meet your AI chef.<br><span>Try it free.</span></h1>
-  <p class="demo-sub">Add what's in your fridge, set your diet, and ask Chef anything. This is the real thing — powered by AI.</p>
+  <p class="demo-sub">Scan your fridge or add ingredients, set your diet, and ask Chef anything. Powered by real AI.</p>
   <div class="demo-limits">
     <div class="demo-limit"><div class="dot"></div>5 free questions</div>
     <div class="demo-limit"><div class="dot"></div>Real AI responses</div>
@@ -206,11 +192,40 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <div class="demo-main">
 
   <!-- SETUP PANEL -->
-  <div class="setup-panel">
+  <div class="setup-panel" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+
+    <div id="scanOverlay" style="display:none;position:absolute;inset:0;background:rgba(17,17,17,0.85);border-radius:16px;z-index:40;flex-direction:column;align-items:center;justify-content:center;gap:16px;pointer-events:all">
+      <div style="width:48px;height:48px;border:4px solid rgba(255,255,255,0.2);border-top-color:#FF6B2B;border-radius:50%;animation:spin 0.8s linear infinite"></div>
+      <div style="color:white;font-size:15px;font-weight:600;text-align:center;padding:0 20px">Chef is scanning your fridge...</div>
+    </div>
+
     <div class="panel-section">
       <div class="panel-label">Your fridge <span id="ing-count">0 items</span></div>
+
+      <!-- SCAN BUTTON -->
+      <div style="position:relative;margin-bottom:10px">
+        <button id="scanBtn" onclick="toggleScanMenu()" style="width:100%;padding:11px;background:#FF6B2B;color:white;border:none;border-radius:12px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s">
+          📷 <span class="scan-label">Scan Fridge</span>
+        </button>
+        <div id="scanMenu" style="display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:white;border:1.5px solid #FF6B2B;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:50;overflow:hidden">
+          <button onclick="startScan('camera')" style="width:100%;padding:13px 16px;background:none;border:none;border-bottom:1px solid #E5E7EB;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-align:left;color:#111;transition:background .1s">📷 Take Live Photo</button>
+          <button onclick="startScan('library')" style="width:100%;padding:13px 16px;background:none;border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;text-align:left;color:#111;transition:background .1s">🖼️ Choose from Library</button>
+        </div>
+      </div>
+
+      <!-- PERMISSION PRIMER -->
+      <div id="permissionPrimer" style="display:none;background:#FFF7F4;border:1px solid #FF6B2B;border-radius:8px;padding:9px 14px;font-size:13px;color:#FF6B2B;font-weight:600;margin-bottom:10px;text-align:center">
+        Chef needs camera access — tap Allow when prompted 📸
+      </div>
+
+      <!-- DRAG DROP HINT -->
+      <div id="dropHint" style="border:2px dashed #E5E7EB;border-radius:10px;padding:14px;text-align:center;font-size:12px;color:#9CA3AF;margin-bottom:10px;transition:all .15s">
+        Drop a fridge photo here to scan
+      </div>
+
+      <!-- MANUAL INPUT -->
       <div class="ing-input-row">
-        <input type="text" class="ing-input" id="ing-input" placeholder="Add an ingredient..." onkeydown="if(event.key==='Enter')addIngredient()">
+        <input type="text" class="ing-input" id="ing-input" placeholder="Or type an ingredient..." onkeydown="if(event.key==='Enter')addIngredient()">
         <button class="ing-add-btn" onclick="addIngredient()">Add</button>
       </div>
       <div class="ing-tags" id="ing-tags"></div>
@@ -230,18 +245,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     <div class="panel-section">
       <div class="panel-label">Locked in full version</div>
       <div class="locked-features">
-        <div class="locked-feat"><span class="lock-icon">🔒</span> Fridge photo scan</div>
         <div class="locked-feat"><span class="lock-icon">🔒</span> Weekly meal plan</div>
         <div class="locked-feat"><span class="lock-icon">🔒</span> Grocery ordering</div>
-        <div class="locked-feat"><span class="lock-icon">🔒</span> "Hey Chef" voice</div>
+        <div class="locked-feat"><span class="lock-icon">🔒</span> Hey Chef voice</div>
         <div class="locked-feat"><span class="lock-icon">🔒</span> Expiry alerts</div>
         <div class="locked-feat"><span class="lock-icon">🔒</span> Nutrition tracking</div>
       </div>
     </div>
+
   </div>
 
   <!-- CHAT PANEL -->
   <div class="chat-panel">
+
+    <div id="scanSuccess" style="display:none;background:#DCFCE7;border:1px solid #16A34A;border-radius:10px;padding:12px 16px;font-size:14px;font-weight:700;color:#16A34A;margin:12px 16px 0"></div>
+
     <div class="chat-header">
       <div class="chef-avatar">👨‍🍳</div>
       <div>
@@ -255,8 +273,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
       <div class="msg-row">
         <div class="msg-avatar-sm msg-avatar-chef">👨‍🍳</div>
         <div class="bubble bubble-chef">
-          Hey! I'm Chef Matt. Add your ingredients on the left, set your diet, and ask me anything — what to cook tonight, recipe ideas, what's expiring, how to use random ingredients. I'm here.<br><br>
-          <strong>Try asking me something below 👇</strong>
+          Hey! I'm Chef Matt. Scan your fridge with the camera button, or add ingredients manually on the left. Set your diet and allergies, then ask me anything.<br><br>
+          <strong>Try a quick question below 👇</strong>
         </div>
       </div>
     </div>
@@ -264,9 +282,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
     <div class="quick-chips" id="quick-chips">
       <button class="qchip" onclick="sendQuick(this,'What can I make tonight with what I have?')">🧊 What can I make tonight?</button>
       <button class="qchip" onclick="sendQuick(this,'Give me a quick 20-minute dinner idea')">⚡ Quick 20-min dinner</button>
-      <button class="qchip" onclick="sendQuick(this,'What should I make this week? Give me 5 dinner ideas')">📅 Plan my week</button>
-      <button class="qchip" onclick="sendQuick(this,'Surprise me with something I wouldn\'t normally make')">🎲 Surprise me</button>
-      <button class="qchip" onclick="sendQuick(this,'What groceries should I buy this week based on my diet?')">🛒 Shopping list</button>
+      <button class="qchip" onclick="sendQuick(this,'Give me 5 dinner ideas for this week')">📅 Plan my week</button>
+      <button class="qchip" onclick="sendQuick(this,'Surprise me with something I would not normally make')">🎲 Surprise me</button>
+      <button class="qchip" onclick="sendQuick(this,'What groceries should I buy this week?')">🛒 Shopping list</button>
     </div>
 
     <div class="chat-input-row">
@@ -282,112 +300,119 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 
     <div class="upgrade-wall" id="upgrade-wall">
       <div class="upgrade-title">You've seen what Chef can do. 🔥</div>
-      <div class="upgrade-sub">The full DinnersDunn experience includes fridge photo scanning, unlimited Chef conversations, weekly meal planning, grocery delivery, voice mode, and full nutrition tracking — all personalized to your family.</div>
+      <div class="upgrade-sub">The full DinnersDunn app includes unlimited Chef conversations, full weekly meal planning, grocery delivery, voice mode, and nutrition tracking — all personalized to your family.</div>
       <div class="upgrade-features">
         <div class="upgrade-feature">Unlimited AI Chef questions</div>
-        <div class="upgrade-feature">Fridge photo scanning</div>
         <div class="upgrade-feature">Full weekly meal plans</div>
         <div class="upgrade-feature">Grocery delivery integration</div>
-        <div class="upgrade-feature">"Hey Chef" voice mode</div>
-        <div class="upgrade-feature">Nutrition & macro tracking</div>
-        <div class="upgrade-feature">All diets & 14 allergies</div>
+        <div class="upgrade-feature">Hey Chef voice mode</div>
+        <div class="upgrade-feature">All diets and 14 allergies</div>
+        <div class="upgrade-feature">Nutrition and macro tracking</div>
         <div class="upgrade-feature">Expiry date alerts</div>
+        <div class="upgrade-feature">Up to 10 family profiles</div>
       </div>
       <form name="waitlist-demo" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="signup" onsubmit="handleSignup(event)">
-      <p style="display:none"><label>Don’t fill this out: <input name="bot-field"></label></p>
+        <p style="display:none"><label>Do not fill this out: <input name="bot-field"></label></p>
         <input type="hidden" name="form-name" value="waitlist-demo">
         <div class="upgrade-form">
           <input type="email" name="email" class="upgrade-input" placeholder="Your email — join the waitlist" required>
           <button type="submit" class="upgrade-btn">Get Early Access 🚀</button>
         </div>
       </form>
-      <div class="upgrade-note" id="signup-note">No spam. Just a message when DinnersDunn launches. Early access + founder pricing.</div>
+      <div class="upgrade-note" id="signup-note">No spam. Just a message from Chef Matt when DinnersDunn launches.</div>
     </div>
-  </div>
 
+  </div>
 </div>
 
 <script>
 const DIETS = ['Keto','Paleo','Vegan','Vegetarian','Mediterranean','Whole30','Low-carb','Gluten-free','Dairy-free','High-protein','Carnivore','Pescatarian'];
 const ALLERGIES = ['Nuts','Peanuts','Shellfish','Fish','Eggs','Dairy','Gluten','Soy','Sesame','Nightshades'];
-const SUGGESTIONS = ['Chicken breast','Eggs','Broccoli','Salmon','Ground beef','Spinach','Tomatoes','Onions','Garlic','Cheddar cheese','Milk','Butter','Rice','Pasta','Potatoes','Carrots','Bell peppers','Zucchini','Avocado','Greek yogurt'];
+const SUGGESTIONS = ['Chicken breast','Eggs','Broccoli','Salmon','Ground beef','Spinach','Tomatoes','Onions','Garlic','Cheddar cheese','Milk','Butter','Rice','Pasta','Potatoes','Carrots','Bell peppers','Avocado','Greek yogurt','Lemon'];
 
 let ingredients = [];
 let selectedDiets = new Set();
 let selectedAllergies = new Set();
 let questionCount = 0;
+let conversationHistory = [];
 const MAX_QUESTIONS = 5;
 let isLoading = false;
 
 function buildSystemPrompt() {
-  const ings = ingredients.length > 0 ? ingredients.join(', ') : 'nothing specified yet';
+  const ings = ingredients.length > 0 ? ingredients.join(', ') : 'nothing added yet — encourage them to scan their fridge or add ingredients';
   const diets = selectedDiets.size > 0 ? [...selectedDiets].join(', ') : 'no specific diet';
   const allergies = selectedAllergies.size > 0 ? [...selectedAllergies].join(', ') : 'none';
-  return `You are Chef Matt, the friendly AI kitchen assistant inside DinnersDunn — an app built by Chef Matt Dunn, a classically trained chef with 20 years in professional kitchens including Marriott Hotels, his own pizzeria, and wedding catering.
+  return `You are Chef Matt, the friendly AI kitchen assistant inside DinnersDunn — an app built by Chef Matt Dunn, a classically trained chef with 20 years in professional kitchens including Marriott Hotels NY/NJ, his own pizzeria, and wedding catering. You answer in a warm, conversational tone like a knowledgeable friend in the kitchen. Be specific and practical.
 
-Current user's fridge contains: ${ings}
+User's fridge contains: ${ings}
 Diet: ${diets}
-Allergies (NEVER suggest these): ${allergies}
+Allergies — NEVER suggest these ever: ${allergies}
 
 Rules:
-- Be warm, specific, and conversational — like a knowledgeable friend in the kitchen
-- Always reference actual ingredients the user has when making suggestions
-- Never suggest anything containing their allergens — not even traces
-- Keep responses concise — 3-5 sentences max, or a short list
+- Always reference the user's actual ingredients when making suggestions
+- Never suggest anything containing their allergens — not even in sauces or traces
+- Keep responses concise — 3-5 sentences max or a short list
 - Use occasional food emojis naturally
-- If they haven't added ingredients yet, gently encourage them to add some and give a general helpful tip
-- Always end with an offer to help with the next step (recipe steps, shopping list, alternatives)
-- This is a demo — you can mention that the full app includes fridge photo scanning, voice mode, grocery ordering, and weekly meal planning`;
+- End with an offer to help with the next step
+- If no ingredients are added yet, warmly encourage them to scan their fridge or type ingredients
+- This is a demo — you can mention the full app has voice mode, grocery ordering, weekly planning, and expiry alerts`;
 }
 
 function renderDiets() {
-  const c = document.getElementById('diet-tags');
-  c.innerHTML = DIETS.map(d => `<span class="diet-tag ${selectedDiets.has(d)?'active':''}" onclick="toggleDiet('${d}')">${d}</span>`).join('');
+  document.getElementById('diet-tags').innerHTML = DIETS.map(d =>
+    `<span class="diet-tag ${selectedDiets.has(d)?'active':''}" onclick="toggleDiet('${d}')">${d}</span>`
+  ).join('');
 }
 
 function renderAllergies() {
-  const c = document.getElementById('allergy-tags');
-  c.innerHTML = ALLERGIES.map(a => `<span class="allergy-tag ${selectedAllergies.has(a)?'active':''}" onclick="toggleAllergy('${a}')">🚫 ${a}</span>`).join('');
+  document.getElementById('allergy-tags').innerHTML = ALLERGIES.map(a =>
+    `<span class="allergy-tag ${selectedAllergies.has(a)?'active':''}" onclick="toggleAllergy('${a}')">🚫 ${a}</span>`
+  ).join('');
 }
 
 function toggleDiet(d) {
-  if(selectedDiets.has(d)) selectedDiets.delete(d); else selectedDiets.add(d);
+  selectedDiets.has(d) ? selectedDiets.delete(d) : selectedDiets.add(d);
   renderDiets();
 }
 
 function toggleAllergy(a) {
-  if(selectedAllergies.has(a)) selectedAllergies.delete(a); else selectedAllergies.add(a);
+  selectedAllergies.has(a) ? selectedAllergies.delete(a) : selectedAllergies.add(a);
   renderAllergies();
 }
 
 function renderIngredients() {
   const c = document.getElementById('ing-tags');
-  c.innerHTML = ingredients.map((ing,i) => `
-    <span class="ing-tag">${ing}<span class="remove" onclick="removeIng(${i})">×</span></span>
-  `).join('');
+  c.innerHTML = ingredients.map((ing, i) =>
+    `<span class="ing-tag">${ing}<span class="remove" onclick="removeIngredient(${i})">×</span></span>`
+  ).join('');
   document.getElementById('ing-count').textContent = ingredients.length + ' item' + (ingredients.length !== 1 ? 's' : '');
   renderSuggestions();
 }
 
 function renderSuggestions() {
-  const remaining = SUGGESTIONS.filter(s => !ingredients.map(i=>i.toLowerCase()).includes(s.toLowerCase())).slice(0, 8);
-  document.getElementById('ing-sug-list').innerHTML = remaining.map(s => `<span class="ing-sug" onclick="addSuggestion('${s}')">+ ${s}</span>`).join('');
+  const remaining = SUGGESTIONS.filter(s => !ingredients.map(i => i.toLowerCase()).includes(s.toLowerCase())).slice(0, 8);
+  document.getElementById('ing-sug-list').innerHTML = remaining.map(s =>
+    `<span class="ing-sug" onclick="addSuggestion('${s}')">+ ${s}</span>`
+  ).join('');
 }
 
 function addIngredient() {
   const input = document.getElementById('ing-input');
   const val = input.value.trim();
-  if (!val || ingredients.includes(val)) { input.value=''; return; }
+  if (!val || ingredients.map(i=>i.toLowerCase()).includes(val.toLowerCase())) { input.value=''; return; }
   ingredients.push(val);
   input.value = '';
   renderIngredients();
 }
 
 function addSuggestion(s) {
-  if (!ingredients.includes(s)) { ingredients.push(s); renderIngredients(); }
+  if (!ingredients.map(i=>i.toLowerCase()).includes(s.toLowerCase())) {
+    ingredients.push(s);
+    renderIngredients();
+  }
 }
 
-function removeIng(i) {
+function removeIngredient(i) {
   ingredients.splice(i, 1);
   renderIngredients();
 }
@@ -395,18 +420,17 @@ function removeIng(i) {
 function addMessage(role, text) {
   const msgs = document.getElementById('messages');
   const row = document.createElement('div');
-  row.className = 'msg-row' + (role==='user'?' user':'');
+  row.className = 'msg-row' + (role === 'user' ? ' user' : '');
   const avatar = document.createElement('div');
-  avatar.className = 'msg-avatar-sm ' + (role==='user'?'msg-avatar-user':'msg-avatar-chef');
-  avatar.textContent = role==='user' ? '👤' : '👨‍🍳';
+  avatar.className = 'msg-avatar-sm ' + (role === 'user' ? 'msg-avatar-user' : 'msg-avatar-chef');
+  avatar.textContent = role === 'user' ? '👤' : '👨‍🍳';
   const bubble = document.createElement('div');
-  bubble.className = 'bubble ' + (role==='user'?'bubble-user':'bubble-chef');
-  bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').replace(/\n/g,'<br>');
+  bubble.className = 'bubble ' + (role === 'user' ? 'bubble-user' : 'bubble-chef');
+  bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
   row.appendChild(avatar);
   row.appendChild(bubble);
   msgs.appendChild(row);
   msgs.scrollTop = msgs.scrollHeight;
-  return row;
 }
 
 function showTyping() {
@@ -454,29 +478,30 @@ async function sendMessage(customText) {
   document.getElementById('send-btn').disabled = true;
 
   addMessage('user', text);
+  conversationHistory.push({ role: 'user', content: text });
   showTyping();
   questionCount++;
   updateUsage();
 
   let reply = '';
   try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch('/.netlify/functions/chef', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
+        type: 'chat',
         system: buildSystemPrompt(),
-        messages: [{role: 'user', content: text}]
+        messages: conversationHistory.slice(-10)
       })
     });
     const data = await resp.json();
-    reply = data.content?.[0]?.text || getFallback(text);
+    reply = data.reply || getFallback(text);
   } catch(e) {
     reply = getFallback(text);
   }
 
   removeTyping();
+  conversationHistory.push({ role: 'assistant', content: reply });
   addMessage('chef', reply);
   isLoading = false;
   if (questionCount < MAX_QUESTIONS) {
@@ -486,34 +511,178 @@ async function sendMessage(customText) {
 
 function sendQuick(btn, text) {
   if (isLoading || questionCount >= MAX_QUESTIONS) return;
-  btn.disabled = true;
   sendMessage(text);
 }
 
 function getFallback(text) {
   const t = text.toLowerCase();
   if (t.includes('make') || t.includes('cook') || t.includes('dinner'))
-    return "Based on what you've got, I'd go with a simple chicken and vegetable stir-fry — quick, satisfying, and works with most ingredients. If you add your specific ingredients I can get much more precise! Want me to walk through a recipe?";
+    return "Based on what you've got I'd start with a simple stir-fry or scramble — fast, flexible, works with almost anything. Add your ingredients on the left and I can get much more specific!";
   if (t.includes('week') || t.includes('plan'))
-    return "For a week of dinners I'd suggest rotating proteins — chicken Monday, fish Wednesday, beef Friday — with flexible veggie sides. Add your ingredients and diet so I can build something specific for you!";
-  return "Great question! Add your ingredients and diet preferences on the left and I'll give you a much more personalized answer. Chef works best when he knows what's actually in your fridge!";
+    return "For a solid week I'd rotate proteins — chicken, fish, beef — with simple veggie sides. Add your ingredients and I'll build a real plan around what you actually have.";
+  return "Great question! Add your ingredients on the left — or scan your fridge with the camera button — and I can give you a much more personalized answer.";
 }
 
-function handleSignup(e){
+function handleSignup(e) {
   e.preventDefault();
-  const form=e.target;
-  const btn=form.querySelector('button[type="submit"]')||form.querySelector('button');
-  if(btn){btn.disabled=true;btn.textContent='Joining...';}
-  const data=new FormData(form);
-  fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(data).toString()})
-    .then(()=>{window.location='/thankyou';})
-    .catch(()=>{window.location='/thankyou';});
+  const inp = e.target.querySelector('input[type="email"]');
+  const note = document.getElementById('signup-note');
+  const btn = e.target.querySelector('button[type="submit"]');
+  const name = inp.value.split('@')[0];
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(new FormData(e.target)).toString()
+  }).catch(() => {});
+  btn.textContent = "You're on the list! ✓";
+  btn.style.background = '#16A34A';
+  note.textContent = 'Welcome, ' + name + '! Chef Matt will reach out when DinnersDunn launches.';
+  note.style.color = '#16A34A';
+  note.style.fontWeight = '600';
+  inp.disabled = true;
+  btn.disabled = true;
+}
+
+// ---- CAMERA / SCAN FUNCTIONS ----
+
+function toggleScanMenu() {
+  const menu = document.getElementById('scanMenu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
+
+function startScan(type) {
+  document.getElementById('scanMenu').style.display = 'none';
+  const primer = document.getElementById('permissionPrimer');
+  primer.style.display = 'block';
+  setTimeout(() => {
+    primer.style.display = 'none';
+    if (type === 'camera') {
+      document.getElementById('cameraInput').click();
+    } else {
+      document.getElementById('libraryInput').click();
+    }
+  }, 1500);
+}
+
+document.getElementById('cameraInput').addEventListener('change', function() {
+  if (this.files[0]) scanPhoto(this.files[0]);
+  this.value = '';
+});
+
+document.getElementById('libraryInput').addEventListener('change', function() {
+  if (this.files[0]) scanPhoto(this.files[0]);
+  this.value = '';
+});
+
+function compressImage(file, callback) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      const maxW = 800;
+      const scale = img.width > maxW ? maxW / img.width : 1;
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const base64 = canvas.toDataURL('image/jpeg', 0.7).split(',')[1];
+      callback(base64);
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function scanPhoto(file) {
+  const overlay = document.getElementById('scanOverlay');
+  overlay.style.display = 'flex';
+  compressImage(file, async function(base64) {
+    try {
+      const res = await fetch('/.netlify/functions/chef', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'scan', image: base64, mediaType: 'image/jpeg' })
+      });
+      const data = await res.json();
+      overlay.style.display = 'none';
+      if (data.ingredients && data.ingredients.length > 0) {
+        const newOnes = data.ingredients.filter(ing =>
+          !ingredients.map(i => i.toLowerCase()).includes(ing.toLowerCase())
+        );
+        newOnes.forEach((ing, i) => {
+          setTimeout(() => {
+            ingredients.push(ing);
+            renderIngredients();
+          }, i * 100);
+        });
+        setTimeout(() => {
+          const banner = document.getElementById('scanSuccess');
+          banner.textContent = '✓ Chef found ' + data.ingredients.length + ' ingredients! Ask me what to make 👇';
+          banner.style.display = 'block';
+          setTimeout(() => { banner.style.display = 'none'; }, 6000);
+        }, newOnes.length * 100 + 300);
+      } else {
+        showScanError();
+      }
+    } catch(err) {
+      overlay.style.display = 'none';
+      showScanError();
+    }
+  });
+}
+
+function showScanError() {
+  const existing = document.getElementById('scanErrorMsg');
+  if (existing) existing.remove();
+  const err = document.createElement('div');
+  err.id = 'scanErrorMsg';
+  err.style.cssText = 'background:#FEF2F2;border:1px solid #FCA5A5;border-radius:8px;padding:10px 14px;font-size:13px;color:#DC2626;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px';
+  err.innerHTML = '<span>Chef could not read the photo. Try better lighting or add manually.</span><button onclick="this.parentElement.remove()" style="background:#DC2626;color:white;border:none;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;font-weight:600;white-space:nowrap">Retry</button>';
+  const firstSection = document.querySelector('.panel-section');
+  firstSection.insertBefore(err, firstSection.firstChild);
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+  const hint = document.getElementById('dropHint');
+  hint.style.borderColor = '#FF6B2B';
+  hint.style.color = '#FF6B2B';
+  hint.style.background = 'rgba(255,107,43,0.04)';
+}
+
+function handleDragLeave(e) {
+  const hint = document.getElementById('dropHint');
+  hint.style.borderColor = '#E5E7EB';
+  hint.style.color = '#9CA3AF';
+  hint.style.background = 'transparent';
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  handleDragLeave(e);
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) scanPhoto(file);
+}
+
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('scanMenu');
+  const btn = document.getElementById('scanBtn');
+  if (menu && !menu.contains(e.target) && btn && !btn.contains(e.target)) {
+    menu.style.display = 'none';
+  }
+});
+
+if (!window.FileReader) {
+  const scanBtn = document.getElementById('scanBtn');
+  if (scanBtn) scanBtn.style.display = 'none';
 }
 
 renderDiets();
 renderAllergies();
 renderSuggestions();
 </script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-J47JE4R6HT"></script>
 <script>
@@ -522,15 +691,5 @@ renderSuggestions();
   gtag('js', new Date());
   gtag('config', 'G-J47JE4R6HT');
 </script>
-<footer style="padding:36px 24px;border-top:1px solid #ececec;text-align:center;color:#5b5b5b;font-size:14px;font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-  <div style="font-weight:800;font-size:18px;color:#111;margin-bottom:8px">Dinners<span style="color:#FF6B2B">Dunn</span></div>
-  <div>Your AI Chef. Dinner Solved.</div>
-  <div style="margin-top:14px">
-    <a href="/" style="color:#5b5b5b;margin:0 10px;text-decoration:none">Home</a>
-    <a href="/privacy" style="color:#5b5b5b;margin:0 10px;text-decoration:none">Privacy</a>
-    <a href="/terms" style="color:#5b5b5b;margin:0 10px;text-decoration:none">Terms</a>
-  </div>
-  <div style="margin-top:14px;color:#999">© 2025 Chef Matt Dunn · DinnersDunn · All rights reserved</div>
-</footer>
 </body>
 </html>

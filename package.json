@@ -1,0 +1,8 @@
+{
+    "name": "dinnersdunn",
+    "version": "1.0.0",
+    "description": "DinnersDunn — Your AI Chef. Dinner Solved.",
+    "dependencies": {
+          "@anthropic-ai/sdk": "^0.20.0"
+    }
+}
